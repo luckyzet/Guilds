@@ -1,0 +1,16 @@
+name: Guilds
+version: 1.0
+main: com.luckyzz.guilds.GuildsPlugin
+softdepend: [ Vault, NravStoneOfReturn, NravCoin, NravApi ]
+author: luckyzz
+api-version: 1.16
+commands:
+  gcreate:
+  ginvite:
+  gkick:
+  g:
+  grank:
+  gaccept:
+  gleave:
+  gtitle:
+  glist:

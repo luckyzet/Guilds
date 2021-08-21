@@ -1,0 +1,336 @@
+database:
+  type: MYSQL
+  hostname: 127.0.0.1
+  port: 3306
+  database: "guilds"
+  username: "root"
+  password: "root" # password
+
+settings:
+  # Время на принятия запроса в гильдию. В секундах.
+  timeToAccept: 30
+
+  # Кулдаун после выхода из гильдии в сек. 24 * 60 * 60
+  cooldown: 86400
+
+hologram:
+  1:
+    type: COUNT_MEMBERS
+    text: "&eКоличество участников: &c%count%"
+  2:
+    type: GUILD_LEVEL
+    text: "&eУровень гильдии: &c%level%"
+  3:
+    type: GUILD_OWNER
+    text: "&eСоздатель гильдии: &c%owner%"
+  4:
+    type: DATE
+    text: "&eДата создания: &c%date%"
+  5:
+    type: IDENTIFIER
+    text: "&eНазвание: &c%identifier%"
+
+items:
+  PANE:
+    material: GRAY_STAINED_GLASS_PANE
+    displayName: "&cНедоступно!"
+  NEXT_PAGE:
+    material: GREEN_WOOL
+    displayName: "&aСлед. страница"
+  PREV_PAGE:
+    material: RED_WOOL
+    displayName: "&aПред. страница"
+  CLOSE:
+    material: RED_WOOL
+    displayName: "&cЗакрыть"
+  UNAVAILABLE:
+    material: BARRIER
+    displayName: "&cНедоступно на текущем уровне"
+  UPGRADE_GUILD:
+    material: ANVIL
+    displayName: "&eАпгрейд гильдии"
+  BANK:
+    material: CHEST
+    displayName: "&eГильдейский банк"
+  TROPHIES:
+    material: BEACON
+    displayName: "&eТрофеи"
+  STORE:
+    material: DIAMOND
+    displayName: "&eМагазин"
+  UPGRADE_BARRIER:
+    material: BARRIER
+    displayName: "&cНедоступно!"
+  UPGRADE_DONE:
+    material: GREEN_STAINED_GLASS_PANE
+    displayName: "&aВыполнено!"
+  UPGRADE_NOT_DONE:
+    material: RED_STAINED_GLASS_PANE
+    displayName: "&cНе выполенно!"
+  # Общие настройки предметов из магазина.
+  UPGRADE_ENTITY:
+    # displayName: "&a%entity%"
+    lore:
+      - "&eНеобходимо: &c%need%"
+      - "&eВыполнено: &c%amount%"
+  UPGRADE_ITEM:
+    # displayName: "&a%material%"
+    lore:
+      - "&eНеобходимо: &c%need%"
+      - "&eВыполнено: &c%amount%"
+  STORE_ITEM:
+    lore:
+      - "&eЦена за предмет: &c%money%"
+
+menu:
+  main:
+    title: "     &eГильдия &7[&e%name%&7]"
+  bank:
+    title: "      &eГильдейский банк &7[&e%page%&7]"
+  upgrade:
+    title: "         &eАпгрейд гильдии"
+  trophies:
+    title: "              &eТрофеи &7[&e%page%&7]"
+  store:
+    title: "   &eГильдейский магазин &7[&e%page%&7]"
+
+heads:
+  ZOMBIE:
+    displayName: "&cЗомби"
+    material: ZOMBIE_HEAD
+  SKELETON:
+    displayName: "&cСкелет"
+    material: SKELETON_SKULL
+  WITHER_SKELETON:
+    displayName: "&cВизер"
+    material: WITHER_SKELETON_SKULL
+  CREEPER:
+    displayName: "&cКрипер"
+    skin: "TODO"
+  ENDERMAN:
+    displayName: "&cЕндермэн"
+    skin: "TODO"
+  SPIDER:
+    displayName: "&cПаук"
+    skin: "TODO"
+
+
+# Настройка уровней.
+# Кол-во уровней не ограниченно.
+# Названия в данной секции по типу first, second, third и т.д. произвольные, они ни на что не влияют.
+# Значение index - индекс уровня, любое число. Будет отображаться в голограммах.
+# Значение type - тип уровня, доступно два значения - DEFAULT и ANOTHER. DEFAULT - стандартный, первый уровень, который будет у
+# гильдии с самого начала. ANOTHER - уровни, которые нужно получать путем сбора ресурсов/убитых мобов.
+# Секция conditions отвечает за необходимые ресурсы/убитых мобов для повышения на этот уровень. Если уровень DEFAULT,
+# то можно ничего не писать.
+# Секция features отвечает за фичи, которые получает гильдия.
+# Значение next - следующий уровень. Если уровень последний, то можно написать -1.
+
+
+# currency - валюта
+# DEFAULT - стандартная
+# COINS - Nrav Coins
+
+levels:
+  1:
+    type: FIRST
+    features:
+      first:
+        type: UPGRADE_GUILD
+      second:
+        type: TROPHIES
+    next: 2
+  2:
+    type: MIDDLE
+    conditions:
+      0:
+        type: ITEMS
+        material: COBBLESTONE
+        amount: 896
+      1:
+        type: ITEMS
+        material: OAK_LOG
+        amount: 384
+      2:
+        type: ITEMS
+        material: WHEAT
+        amount: 384
+    features:
+      first:
+        type: UPGRADE_GUILD
+      second:
+        type: TROPHIES
+      third:
+        type: STORE
+      fourth:
+        type: EXTRA_BANK_PAGES
+        amount: 1
+      fifth:
+        type: STORE_ITEM
+        index: 0
+        currency: DEFAULT
+        money: 300
+        stack:
+          material: STONE_OF_RETURN
+          amount: 1
+          displayName: "&aКамень возвращения"
+          lore:
+            - "&eМагический камень, телепортирует Вас куда угодно!"
+          enchantments:
+            DAMAGE_ALL: 3
+      sixth:
+        type: BANK
+    next: 3
+  3:
+    type: MIDDLE
+    conditions:
+      0:
+        type: ITEMS
+        material: COBBLESTONE
+        amount: 1792
+      1:
+        type: ITEMS
+        material: OAK_LOG
+        amount: 768
+      2:
+        type: ITEMS
+        material: WHEAT
+        amount: 768
+    features:
+      first:
+        type: UPGRADE_GUILD
+      second:
+        type: TROPHIES
+      third:
+        type: STORE
+      fourth:
+        type: EXTRA_BANK_PAGES
+        amount: 4
+      fifth:
+        type: STORE_ITEM
+        index: 1
+        currency: COINS
+        money: 1
+        stack:
+          material: STONE_OF_RETURN
+          amount: 1
+      sixth:
+        type: BANK
+    next: 4
+  4:
+    type: MIDDLE
+    conditions:
+      0:
+        type: ITEMS
+        material: STONE
+        amount: 896
+      1:
+        type: ITEMS
+        material: STRIPPED_OAK_LOG
+        amount: 384
+      2:
+        type: ITEMS
+        material: COD
+        amount: 384
+    features:
+      first:
+        type: UPGRADE_GUILD
+      second:
+        type: TROPHIES
+      third:
+        type: STORE
+      fourth:
+        type: EXTRA_BANK_PAGES
+        amount: 4
+      fifth:
+        type: STORE_ITEM
+        currency: DEFAULT
+        money: 2000
+        index: 2
+        stack:
+          material: FISHING_ROD
+          amount: 1
+          displayName: "&aУдочка-удачка"
+          enchantments:
+            LURE: 3
+      sixth:
+        type: BANK
+    next: 5
+  5:
+    type: MIDDLE
+    conditions:
+      0:
+        type: ITEMS
+        material: STONE
+        amount: 1792
+      1:
+        type: ITEMS
+        material: STRIPPED_OAK_LOG
+        amount: 768
+      2:
+        type: ITEMS
+        material: LEATHER
+        amount: 256
+    features:
+      first:
+        type: UPGRADE_GUILD
+      second:
+        type: TROPHIES
+      third:
+        type: STORE
+      fourth:
+        type: EXTRA_BANK_PAGES
+        amount: 5
+      fifth:
+        type: STORE_ITEM
+        currency: DEFAULT
+        money: 2400
+        index: 3
+        stack:
+          material: IRON_AXE
+          amount: 1
+          displayName: "&aТопор мясника"
+          enchantments:
+            LOOT_BONUS_MOBS: 3
+      sixth:
+        type: BANK
+    next: 6
+  6:
+    type: LAST
+    conditions:
+      0:
+        type: ITEMS
+        material: STONE
+        amount: 3584
+      1:
+        type: ITEMS
+        material: STRIPPED_OAK_LOG
+        amount: 1536
+      2:
+        type: ITEMS
+        material: COOKED_PORKCHOP
+        amount: 512
+    features:
+      first:
+        type: UPGRADE_GUILD
+      second:
+        type: TROPHIES
+      third:
+        type: STORE
+      fourth:
+        type: EXTRA_BANK_PAGES
+        amount: 6
+      fifth:
+        type: STORE_ITEM
+        currency: DEFAULT
+        money: 1900
+        index: 4
+        stack:
+          material: BOW
+          amount: 1
+          displayName: "&aОгнестрел"
+          enchantments:
+            ARROW_FIRE: 1
+      sixth:
+        type: BANK
+    next: -1
